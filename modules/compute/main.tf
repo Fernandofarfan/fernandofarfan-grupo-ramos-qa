@@ -1,23 +1,24 @@
 data "google_compute_network" "qa_vpc" {
-  name    = "gramos-vpc-shared-dev"
-  project = "gramos-prj-dev-shd-net-01"
+  name    = "gramos-vpc-shared-qa"
+  project = "gramos-prj-qa-shd-net-01"
 }
 
 data "google_compute_subnetwork" "qa_subnet" {
-  name    = "gramos-shared-sap-dev-01"
+  name    = "gramos-shared-sap-qa-01"
   region  = "us-east1"
-  project = "gramos-prj-dev-shd-net-01"
+  project = "gramos-prj-qa-shd-net-01"
 }
+
 
 # -------------------------------------------------------------------------
 # INSTANCIA 1: SAP CAR APP QA (vhgrrcaqapp01)
 # -------------------------------------------------------------------------
 resource "google_compute_instance" "sap_car_app_qa" {
-  name         = "vhgrrcaqapp01"
-  machine_type = "n2d-highmem-8"
-  zone         = var.zone
-  project      = var.qa_project
-  tags         = ["allow-iap", "sap-app", "sap-vm"]
+  name           = "vhgrrcaqapp01"
+  machine_type   = "n2d-highmem-8"
+  zone           = var.zone
+  project        = var.qa_project
+  tags           = ["allow-iap", "sap-app", "sap-vm"]
   desired_status = var.desired_status
 
   boot_disk {
@@ -58,11 +59,11 @@ resource "google_compute_attached_disk" "sap_car_app_qa_sap_disk_attach" {
 # INSTANCIA 2: SAP CAR DB HANA QA (vhgrrcaqdb01)
 # -------------------------------------------------------------------------
 resource "google_compute_instance" "sap_car_db_qa" {
-  name         = "vhgrrcaqdb01"
-  machine_type = "m3-ultramem-64"
-  zone         = var.zone
-  project      = var.qa_project
-  tags         = ["allow-iap", "sap-db", "sap-vm"]
+  name           = "vhgrrcaqdb01"
+  machine_type   = "m3-ultramem-64"
+  zone           = var.zone
+  project        = var.qa_project
+  tags           = ["allow-iap", "sap-db", "sap-vm"]
   desired_status = var.desired_status
 
   boot_disk {
